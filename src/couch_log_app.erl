@@ -10,15 +10,19 @@
 % License for the specific language governing permissions and limitations under
 % the License.
 
-{application, couch_log, [
-    {description, "CouchDB Log API"},
-    {vsn, git},
-    {modules, [
-        couch_log_app,
-        couch_log,
-        couch_log_sup
-    ]},
-    {mod, {couch_log_app, []}},
-    {registered, []},
-    {applications, [kernel, stdlib, lager]}
-]}.
+-module(couch_log_app).
+
+-behaviour(application).
+
+%% Application callbacks
+-export([start/2, stop/1]).
+
+%% ===================================================================
+%% Application callbacks
+%% ===================================================================
+
+start(_StartType, _StartArgs) ->
+    couch_log_sup:start_link().
+
+stop(_State) ->
+    ok.

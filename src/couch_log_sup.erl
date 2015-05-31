@@ -10,15 +10,20 @@
 % License for the specific language governing permissions and limitations under
 % the License.
 
-{application, couch_log, [
-    {description, "CouchDB Log API"},
-    {vsn, git},
-    {modules, [
-        couch_log_app,
-        couch_log,
-        couch_log_sup
-    ]},
-    {mod, {couch_log_app, []}},
-    {registered, []},
-    {applications, [kernel, stdlib, lager]}
-]}.
+-module(couch_log_sup).
+-behaviour(supervisor).
+-export([init/1, start_link/0]).
+
+start_link() ->
+    supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+
+init([]) ->
+    Children = [
+        {couch_log,
+            {couch_log, start_link, []},
+            permanent,
+            infinity,
+            supervisor,
+            [couch_log]}
+    ],
+    {ok, {{one_for_one, 10, 3600}, Children}}.
