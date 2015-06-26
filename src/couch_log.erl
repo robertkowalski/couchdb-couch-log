@@ -13,35 +13,37 @@
 -module(couch_log).
 
 -export([debug/2, info/2, notice/2, warning/2, error/2, critical/2, alert/2, emergency/2]).
+-export([debug_unsafe/2, info_unsafe/2, notice_unsafe/2, warning_unsafe/2, error_unsafe/2,
+    critical_unsafe/2, alert_unsafe/2, emergency_unsafe/2]).
 
 debug(Fmt, Args) ->
     catch couch_stats:increment_counter([couch_log, level, debug]),
-    lager:debug(Fmt, Args).
+    lager:debug_unsafe(Fmt, Args).
 
 info(Fmt, Args) ->
     catch couch_stats:increment_counter([couch_log, level, info]),
-    lager:info(Fmt, Args).
+    lager:info_unsafe(Fmt, Args).
 
 notice(Fmt, Args) ->
     catch couch_stats:increment_counter([couch_log, level, notice]),
-    lager:notice(Fmt, Args).
+    lager:notice_unsafe(Fmt, Args).
 
 warning(Fmt, Args) ->
     catch couch_stats:increment_counter([couch_log, level, warning]),
-    lager:warning(Fmt, Args).
+    lager:warning_unsafe(Fmt, Args).
 
 error(Fmt, Args) ->
     catch couch_stats:increment_counter([couch_log, level, 'error']),
-    lager:error(Fmt, Args).
+    lager:error_unsafe(Fmt, Args).
 
 critical(Fmt, Args) ->
     catch couch_stats:increment_counter([couch_log, level, critical]),
-    lager:critical(Fmt, Args).
+    lager:critical_unsafe(Fmt, Args).
 
 alert(Fmt, Args) ->
     catch couch_stats:increment_counter([couch_log, level, alert]),
-    lager:alert(Fmt, Args).
+    lager:alert_unsafe(Fmt, Args).
 
 emergency(Fmt, Args) ->
     catch couch_stats:increment_counter([couch_log, level, emergency]),
-    lager:emergency(Fmt, Args).
+    lager:emergency_unsafe(Fmt, Args).
